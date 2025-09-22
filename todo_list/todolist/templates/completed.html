@@ -1,0 +1,34 @@
+{% extends 'task_list.html' %}
+{% load static %}
+
+{% block title %}
+Completed List
+{%endblock%}
+
+{% block content %}
+
+<div>
+    <h2>Completed Tasks ✅</h2>
+</div>
+
+<div class="task-container max-w-3xl mx-auto space-y-6">
+    <ul class="task-list flex-1">
+        {% for task in completedtasks %}
+        <li class="task-item task font-medium text-gray-900 {% if task.completed %}line-through{% endif %}">
+            <form method="POST">
+                {% csrf_token%}
+                <input type="hidden" name="form_type" value="toggle_task">
+                <input type="hidden" name="task_id" value="{{ task.id }}">
+                <input type="checkbox" onclick="this.form.submit()" checked>
+                <span class="completed">{{ task.title }}</span>
+            </form>
+        </li>
+        {% empty %}
+            <li>No tasks completed yet.</li>
+        {% endfor %}
+    </ul>
+    <!-- Link back to all tasks -->
+<a href="{% url 'task_list' %}">Back to All Tasks!</a>
+</div>
+
+{%endblock%}

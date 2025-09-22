@@ -1,0 +1,104 @@
+{% load static %}
+
+<!-- for public pages -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/todo.css' %}">
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+    <title>
+        {% block title %}
+        The Best To-Do List App for Web2025
+        {%endblock%}
+    </title>
+    {% block extra_css %}{%endblock%}
+</head>
+<body>
+    <header class="welcome-header">
+        <div class="logo"><a href="{% url 'welcome' %}">NEXTDEV To-Do</a></div>
+
+        <nav class="welcome-nav">
+            <!-- Horizontal nav (large screens)-->
+            <ul class="nav-links">
+                <li><a href="{% url 'welcome' %}">Home</a></li>
+                <li><a href="{% url 'welcome' %}#features">Features</a></li>
+                <li><a href="{% url 'task_list' %}">Start Here</a></li>
+                <li><a href="{% url 'contact_us' %}">Contact Us</a></li>
+            </ul>
+
+            <!-- Hamburger icon (for mobile only) -->
+            <div class="hamburger" onclick="navMenu()">&#9776;</div>
+
+            <!-- Dropdown (mobile only)-->
+            <ul id="menu" class="menu hidden">
+                <li><a href="{% url 'welcome' %}">Home</a></li>
+                <li><a href="{% url 'welcome' %}#features">Features</a></li>
+                <li><a href="{% url 'task_list' %}">Start Here</a></li>
+                <li><a href="{% url 'contact_us' %}">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    {% block content %}
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <h1>Stay on top of your day</h1>
+        <h3>Don't get left behind. Get your work done with simple easy-to-use to-do list for your personal tasks, family projects, etc.</h3>
+    </div>
+    <div class="button-container">
+        <a href="{% url 'task_list' %}">
+            <button>Get Started!</button>
+        </a>
+    </div>
+
+    <!-- Feature Section -->
+    <div id="features" class="features-section">
+        <!-- Feature 1 -->
+        <div class="feature">
+            <img src="/static/images/icon_subtask.jpeg" alt="Subtask">
+            <h3>Subtask</h3>
+            <p>Split a task into small pieces.</p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="feature">
+            <img src="/static/images/icon_Due_date.jpeg" alt="Set Due Date">
+            <h3>Due Date</h3>
+            <p>Set a due date so that no deadline is missed</p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="feature">
+            <img src="/static/images/icon_add_note.jpeg" alt="Add Note">
+            <h3>Note</h3>
+            <p>Add a note to make sure all information of the task is not missed</p>
+        </div>
+    </div>
+    {% endblock %}
+    
+    <footer>
+        &copy;2025 MADE WITH &#10084; BY THERESA & COVENANT
+        <br>Uicons by <a href="https://www.flaticon.com/uicons">Flaticon</a>
+    </footer>
+
+
+
+<script>
+function navMenu() {
+    document.getElementById("menu").classList.toggle("hidden")
+}
+
+// Close menu if clicking outside
+document.addEventListener("click", function(event) {
+    const menu = document.getElementById("menu");
+    const hamburger = document.querySelector(".hamburger")
+
+    if ( !menu.contains(event.target) && !hamburger.contains(event.target)) {
+        menu.classList.add("hidden"); // this to hide menu
+    }
+});
+</script>
+</body>
+</html>
