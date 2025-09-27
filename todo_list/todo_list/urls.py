@@ -16,8 +16,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.shortcuts import redirect 
+
+# def root_redirect(request):
+#     return redirect('todo/')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/', include('accounts.urls')),
     path('todo/', include('todolist.urls')), # connect todolist app
+    path('', include('pages.urls')), # pages app handles the homepage and static pages
+    # path('', root_redirect), # < this adds a root path, instead of 'todo/', i will changed it later to 'pages/'
 ]

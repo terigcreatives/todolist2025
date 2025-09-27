@@ -1,8 +1,9 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 
 from django.http import HttpResponse
 from django.template import loader
-from .models import Task, SubTask
+from .models import Task
 from datetime import datetime, timedelta
 from django.utils import timezone
 
@@ -11,16 +12,7 @@ from django.utils import timezone
 # def home(request):
 #     return HttpResponse("Hello! Your Django server is connected and running! 🎉")
 
-# Display welcome page of todolist app
-def welcome(request):
-    template = loader.get_template('welcome.html')
-    return HttpResponse(template.render())
-
-# View contact page
-def contact(request):
-    template = loader.get_template('contact.html')
-    return HttpResponse(template.render())
-
+@login_required
 # View main page - All Tasks List
 def tasklist(request):
     if request.method == "POST":
@@ -186,7 +178,7 @@ def edit_task(request, id):
             return redirect(next_url)
         return redirect("task_list")
     # For GET, you can render a page or just return nothing if using modal
-    return render(request, 'edit_task.html', {'task': task, 'subtasks': subtasks})
+    # return render(request, 'edit_task.html', {'task': task, 'subtasks': subtasks})
 
 
 def taskcompleted(request):

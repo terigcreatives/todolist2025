@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Create account</h2>
+<form method="post" action="{% url 'register' %}" id="registerForm" novalidate>
+    {% csrf_token %}
+    {{form.non_field_errors}}
+    <p>
+        {{ form.email.label_tag }}
+        {{ form.email }}
+        {{ form.email.errors }}
+    </p>
+    <p>
+        {{ form.username.label_tag }}
+        {{ form.username }}
+        {{ form.username.errors }}
+    </p>
+    <p>
+        {{ form.password1.label_tag }}<br>
+        {{ form.password1 }}
+        {{ form.password1.help_text }}
+        {{ form.password1.errors }}
+    </p>
+    <p>
+        {{ form.password2.label_tag }}<br>
+        {{ form.password2 }}
+        {{ form.password2.errors }}
+    </p>
+
+    <input type="hidden" name="next" value="{% url 'task_list' %}">
+    <button type="submit" id="submitBtn">Create account</button>
+</form>
+
+<script>
+/* optional lightweight client-side checks to improve UX */
+const p1 = document.getElementById('id_password1');
+const p2 = document.getElementById('id_password2');
+const submitBtn = document.getElementById('submitBtn');
+
+function checkPasswordRules(pw) {
+    return {
+        length: /.{8,}/.test(pw),
+        upper: /[A-Z]/.test(pw),
+        number: /\d/.test(pw),
+        special: /[!@#$%^&*(),.?":{}|<>£]/.test(pw),
+    };
+}
+
+function updateSubmitState(){
+    const pw = p1?.value || '';
+    const pw2 = p2?.value || '';
+    const checks = checkPasswordRules(pw);
+    const allPass = Object.values(checks).every(Boolean);
+    submitBtn.disabled = !(allPass && pw && pw2 && (pw === pw2));
+}
+
+document.addEventListener('DOMContentLoaded', updateSubmitState);
+p1?.addEventListener('input', updateSubmitState);
+p2?.addEventListener('input', updateSubmitState);
+
+</script>
+{% endblock %}

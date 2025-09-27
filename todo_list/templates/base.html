@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% block title %}To-Do App{% endblock %}</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/todo.css' %}" />
+  <style>
+    .msg { padding:.5rem; margin: .5rem 0; border-radius: 4px; }
+    .msg-success { background: #e6ffed; color:#065; }
+    .msg-error { background: #ffe6e6; color: #a00;}
+  </style>
+  {% block head %}{% endblock %}
+</head>
+<body>
+  <header>
+    <h1>{% block header %}NEXTDEV To-Do{% endblock %}</h1>
+    <nav>
+        <a href="{% url 'welcome' %}">Home</a> |
+        <a href="{% url 'task_list' %}">Tasks</a> |
+        {% if request.user.is_authenticated %}
+          Hello, {{ request.user.username }} |
+          <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" style="background:none;border:0;color:#00f;text-decoration:underline;cursor:pointer;padding:0;font:inherit">
+              Logout
+            </button>
+          </form>
+        {% else %}
+          <a href="{% url 'login' %}">Login</a> |
+          <a href="{% url 'register' %}">Sign up</a>
+        {% endif %}
+    {% block nav %}{% endblock %}
+    </nav>
+  </header>
+
+  {% if messages %}
+    {% for m in messages %}
+        <div class="msg {% if m.tags %}msg-{{ m.tags }}{% endif %}">
+            {{ m }}
+        </div>
+    {% endfor %}
+  {% endif %}
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer>
+    {% block footer %}&copy; {{ now|date:'Y' }}{% endblock %}
+  </footer>
+
+  <script src="{% static 'js/todo.js' %}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

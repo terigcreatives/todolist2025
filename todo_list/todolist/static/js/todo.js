@@ -118,36 +118,36 @@ function openAddTaskModal() {
     document.getElementById('taskModal').classList.remove('hidden');
 }
 
-// function openEditTaskModal(id, title, description, priority, dueDate, dueTime, subtasks) {
-//     document.getElementById('modalTitle').textContent = 'Edit Task';
-//     document.getElementById('taskForm').action = `/editTask/${id}`; // Update form action
-//     document.getElementById('editTaskId').value = id;
-//     document.getElementById('taskForm').reset();
+function openEditTaskModal(id, title, description, priority, dueDate, dueTime, subtasks) {
+    document.getElementById('modalTitle').textContent = 'Edit Task';
+    document.getElementById('taskForm').action = `/editTask/${id}`; // Update form action
+    document.getElementById('editTaskId').value = id;
+    document.getElementById('taskForm').reset();
 
-//     document.querySelector('input[name="title"]').value = title;
-//     document.querySelector('textarea[name="description"]').value = description;
-//     document.querySelector('select[name="priority"]').value = priority;
-//     document.getElementById('taskDate').value = dueDate;
-//     document.getElementById('taskTime').value = dueTime;
+    document.querySelector('input[name="title"]').value = title;
+    document.querySelector('textarea[name="description"]').value = description;
+    document.querySelector('select[name="priority"]').value = priority;
+    document.getElementById('taskDate').value = dueDate;
+    document.getElementById('taskTime').value = dueTime;
 
-//     // Subtasks
-//     document.getElementById('subtasksList').innerHTML = '';
-//     subtaskCounter = 0;
-//     if (subtasks && subtasks.length) {
-//         subtasks.forEach(function(subtaskTitle) {
-//             subtaskCounter++;
-//             const input = document.createElement('input');
-//             input.type = 'text';
-//             input.name = `subtask_${subtaskCounter}`;
-//             input.className = 'w-full border rounded px-3 py-2 mb-2';
-//             input.placeholder = `Subtask ${subtaskCounter}`;
-//             input.value = subtaskTitle;
-//             document.getElementById('subtasksList').appendChild(input);
-//         });
-//     }
+    // Subtasks
+    document.getElementById('subtasksList').innerHTML = '';
+    subtaskCounter = 0;
+    if (subtasks && subtasks.length) {
+        subtasks.forEach(function(subtaskTitle) {
+            subtaskCounter++;
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.name = `subtask_${subtaskCounter}`;
+            input.className = 'w-full border rounded px-3 py-2 mb-2';
+            input.placeholder = `Subtask ${subtaskCounter}`;
+            input.value = subtaskTitle;
+            document.getElementById('subtasksList').appendChild(input);
+        });
+    }
 
-//     document.getElementById('taskModal').classList.remove('hidden');
-// }
+    document.getElementById('taskModal').classList.remove('hidden');
+}
 
 function handleEditClick(btn) {
     const id = btn.getAttribute('data-task-id');
@@ -167,4 +167,5 @@ function handleEditClick(btn) {
     }
 
     openEditTaskModal(id, title, description, priority, dueDate, dueTime, subtasks);
+    // handleEditClick(id, title, description, priority, dueDate, dueTime, subtasks);
 }

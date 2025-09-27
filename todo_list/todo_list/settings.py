@@ -16,6 +16,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
@@ -40,6 +41,8 @@ INSTALLED_APPS = [
 
     #my apps
     'todolist',
+    'accounts',
+    'pages',
 ]
 
 MIDDLEWARE = [
@@ -54,10 +57,15 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'todo_list.urls'
 
+# Auth redirects
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'task_list'  # change to your tasks index URL
+# LOGOUT_REDIRECT_URL = 'login' # where users go after logout
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
