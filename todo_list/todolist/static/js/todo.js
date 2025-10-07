@@ -12,7 +12,7 @@ function closeAddTaskModal() {
 }
 
 // Delete icon feature using <a>
-function handleDeleteClick(link) {
+function handleDeleteClick(btn) {
     if (!confirm('Are you sure you want to delete this task?')) return;
     const taskId = link.getAttribute('data-task-id');
     const form = document.getElementById('deleteTaskForm');
@@ -20,49 +20,36 @@ function handleDeleteClick(link) {
     form.submit();
 }
 
-/////////
-    // Toggle show/hide completed tasks
-    document.getElementById("toggleCompleted").addEventListener("click", function () {
-        let completedList = document.getElementById("completedTasks");
-        if (completedList.style.display === "none") {
-            completedList.style.display = "block";
-            this.textContent = "▶ Hide Completed Tasks";
-        } else {
-            completedList.style.display = "none";
-            this.textContent = "▼ Show Completed Tasks";
-        }
-    });
-
-// Modal functions
-// function openAddTaskModal() {
-//     document.getElementById('modalTitle').textContent = 'Add New Task';
-//     document.getElementById('taskForm').reset();
-//     // Set today's date as default
-//     const today = new Date().toISOString().split('T')[0];
-//     document.getElementById('taskDate').value = today;
-//     document.getElementById('taskModal').classList.remove('hidden');
-// }
-// function closeAddTaskModal() {
-//     document.getElementById('taskModal').classList.add('hidden');
-// }
+////////
 
 let subtaskCounter = 0;
 
 // For new subtasks
-function addSubtaskField(title = '', completed = false) {
+function addSubtaskField() {
     subtaskCounter++;
     const subtasksList = document.getElementById('subtasksList');
     const div = document.createElement('div');
-    div.className = 'flex items-center mb-2 subtask-row';
+    div.className = 'flex items-center space-x-2';
     div.innerHTML = `
-        <input type="text" name="subtask_title_new_${subtaskCounter}" value="${title}" placeholder="Subtask" class="w-2/3 border rounded px-2 py-1 mr-2">
-        <label class="mr-2">
-            <input type="checkbox" name="subtask_completed_new_${subtaskCounter}" ${completed ? 'checked' : ''}> Done
+        <input type="text" name="subtask_title[]" 
+                placeholder="Subtask title" 
+                class="w-2/3 border rounded px-2 py-1 mr-2">
+
+        <!-- hidden + checkbox pair -->
+        <label class="mr-2"> 
+            <input type="hidden" name="subtask_title[]" value="0">
+            <input type="checkbox" name="subtask_completed[]" 
+                value="1" class="accent-green-500"> Done
         </label>
-        <button type="button" onclick="this.parentElement.remove()" class="text-red-500 ml-2"><i class="fi fi-rr-trash"></i></button>
+
+        <!-- Delete icon -->
+        <button type="button" onclick="handleDeleteClick(btn)>
+        <i class="fi fi-rr-trash"></i></button>
+
     `;
     subtasksList.appendChild(div);
 }
+
 
 // For existing subtasks (when editing)
 function addExistingSubtaskField(id, title, completed) {
@@ -84,28 +71,6 @@ function addExistingSubtaskField(id, title, completed) {
     subtasksList.appendChild(div);
 }
 
-// When opening the modal for editing
-// function openEditTaskModal(id, title, description, priority, dueDate, dueTime, subtasks) {
-//     document.getElementById('modalTitle').textContent = 'Edit Task';
-//     document.getElementById('taskForm').action = `/editTask/${id}/`;
-//     document.getElementById('editTaskId').value = id;
-//     document.getElementById('taskForm').reset();
-//     document.querySelector('input[name="title"]').value = title;
-//     document.querySelector('textarea[name="description"]').value = description;
-//     document.querySelector('select[name="priority"]').value = priority;
-//     document.getElementById('taskDate').value = dueDate;
-//     document.getElementById('taskTime').value = dueTime;
-
-//     // Clear and add subtasks
-//     document.getElementById('subtasksList').innerHTML = '';
-//     subtaskCounter = 0;
-//     if (subtasks && subtasks.length) {
-//         subtasks.forEach(function(subtask) {
-//             addExistingSubtaskField(subtask.id, subtask.title, subtask.completed);
-//         });
-//     }
-//     document.getElementById('taskModal').classList.remove('hidden');
-// }
 
 // Optional: Reset subtasks when opening modal
 function openAddTaskModal() {
@@ -130,22 +95,20 @@ function openEditTaskModal(id, title, description, priority, dueDate, dueTime, s
     document.getElementById('taskDate').value = dueDate;
     document.getElementById('taskTime').value = dueTime;
 
-    // Subtasks
-    document.getElementById('subtasksList').innerHTML = '';
+    // Clear and render existing subtasks (id, title, completed)
+    const list = document.getElementById('subtasksList');
+    list.innerHTML = '';
     subtaskCounter = 0;
-    if (subtasks && subtasks.length) {
-        subtasks.forEach(function(subtaskTitle) {
-            subtaskCounter++;
-            const input = document.createElement('input');
-            input.type = 'text';
-            input.name = `subtask_${subtaskCounter}`;
-            input.className = 'w-full border rounded px-3 py-2 mb-2';
-            input.placeholder = `Subtask ${subtaskCounter}`;
-            input.value = subtaskTitle;
-            document.getElementById('subtasksList').appendChild(input);
+
+    // Expect subtasks to be an array of objects: [{id, title, completed}]
+    if (Array.isArray(subtasks)) {
+        subtasks.forEach(s => {
+            if (!s) return;
+            addExistingSubtaskField(s.id, s.title, !!s.completed);
         });
     }
 
+    // User can add more while editing using the existing "+ Add Subtask" button
     document.getElementById('taskModal').classList.remove('hidden');
 }
 

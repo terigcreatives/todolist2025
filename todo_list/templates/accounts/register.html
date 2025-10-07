@@ -1,33 +1,50 @@
 {% extends "base.html" %}
+
 {% block content %}
-<h2>Create account</h2>
-<form method="post" action="{% url 'register' %}" id="registerForm" novalidate>
+<h2 style="color: #2563eb; text-align: center; margin-bottom: 20px;">Create Account</h2>
+<form method="post" action="{% url 'register' %}" id="registerForm" novalidate style="max-width:400px; margin:20px auto;">
     {% csrf_token %}
     {{form.non_field_errors}}
-    <p>
+    <p style="margin-bottom: 15px;">
+      <label style="display:block; font-weight:600; margin-bottom:6px;">
         {{ form.email.label_tag }}
-        {{ form.email }}
-        {{ form.email.errors }}
+      </label>
+        
+      {{ form.email }}
+
+      {% if form.email.errors %}  
+        <span style="color:red; font-size:14px;">
+          {{ form.email.errors }}
+        </span>
+      {% endif %}
     </p>
-    <p>
-        {{ form.username.label_tag }}
+    <p style="margin-bottom: 15px;">
+        <label style="display:block; font-weight:600; margin-bottom:6px;">{{ form.username.label_tag }}</label>
         {{ form.username }}
-        {{ form.username.errors }}
+        {% if form.username.errors %}
+          <span style="color: red; font-size: 14px;">{{ form.username.errors }}</span>
+        {% endif %}
     </p>
-    <p>
-        {{ form.password1.label_tag }}<br>
-        {{ form.password1 }}
+    <p style="margin-bottom: 15px;">
+        <label style="display:block; font-weight:600; margin-bottom:6px;">{{ form.password1.label_tag }}</label>
+        {{ form.password1 }}<br>
         {{ form.password1.help_text }}
-        {{ form.password1.errors }}
+        {% if form.password1.errors %}
+          <span style="color: red; font-size: 14px;">{{ form.password1.errors }}</span>
+        {% endif %}
+        
     </p>
-    <p>
-        {{ form.password2.label_tag }}<br>
+    <p style="margin-bottom: 15px;">
+        <label style="display:block; font-weight:600; margin-bottom:6px;">{{ form.password2.label_tag }}</label>
         {{ form.password2 }}
-        {{ form.password2.errors }}
+        {% if form.password2.errors %}
+          <span style="color: red; font-size: 14px;">{{ form.password2.errors }}</span>
+        {% endif %}
+        
     </p>
 
     <input type="hidden" name="next" value="{% url 'task_list' %}">
-    <button type="submit" id="submitBtn">Create account</button>
+    <button type="submit" id="submitBtn" style="background-color:#2563eb; color:#fff; padding:10px; border: none; border-radius:8px; width:100%; align-items: center;">Create account</button>
 </form>
 
 <script>

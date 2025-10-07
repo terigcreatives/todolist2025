@@ -57,7 +57,7 @@
                 <!-- App Title -->
                 <h1 class="text-2xl font-bold text-gray-800">NEXTDEV To-Do</h1>
 
-                <div class="flex items-center gap-3"
+                <div class="flex items-center gap-3">
                   <!-- Add Task Button -->
                   <button onclick="openAddTaskModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">+ Add Task
                   </button>
@@ -67,7 +67,7 @@
                     {% csrf_token %}
                     <button type="submit" class="p-1 hover:opacity-75" title="Logout">
                       <img src="{% static 'images/logout.png' %}" alt="Logout" 
-                      class="w-6 h-6">
+                      class="w-6 h-6 transform transition-transform duration-150 ease-in-out hover:scale-125">
                     </button>
                   </form>
                 </div>
@@ -76,23 +76,21 @@
     </header>
 
     <!-- Navigation -->
-    <nav class="space-x-4">
-        <div class="m-10 bg-opacity-40">
+    <nav class="space-x-4 bg-white border-b border-gray-200 sticky top-16 z-30" >
+        <div class="m-8 bg-opacity-30 max-w-4xl mx-auto px-4">
             <div>
-                <a href="{% url 'task_list' %}" class="nav-btn text-gray-600 hover:text-gray-800 px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-colors bg-blue-100 text-blue-700">All Tasks</a>
-                <a href="{% url 'today' %}" class="nav-btn px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-colors bg-blue-100 text-blue-700">Today</a>
-                <a href="{% url 'tomorrow' %}" class="nav-btn px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-colors bg-blue-100 text-blue-700">Tomorrow</a>
-                <a href="{% url 'this_week' %}" class="nav-btn px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-colors bg-blue-100 text-blue-700">This Week</a>
-                <a href="{% url 'planned' %}" class="nav-btn px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-colors bg-blue-100 text-blue-700">Planned</a>
-                <a href="{% url 'completed' %}" class="nav-btn px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-colors bg-blue-100 text-blue-700">Completed</a>
+                <a href="{% url 'task_list' %}" class="nav-btn px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-colors bg-blue-100 text-blue-700">All Tasks</a>
+                <a href="{% url 'today' %}" class="nav-btn px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-colors text-gray-600 hover:bg-blue-100">Today</a>
+                <a href="{% url 'tomorrow' %}" class="nav-btn px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-colors text-gray-600 hover:bg-blue-100">Tomorrow</a>
+                <a href="{% url 'this_week' %}" class="nav-btn px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-colors text-gray-600 hover:bg-blue-100">This Week</a>
+                <a href="{% url 'planned' %}" class="nav-btn px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-colors text-gray-600 hover:bg-blue-100">Planned</a>
+                <a href="{% url 'completed' %}" class="nav-btn px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-colors text-gray-600 hover:bg-blue-100">Completed</a>
             </div>
         </div>
     </nav>
 
     <!-- Content -->
     <main class="max-w-4xl mx-auto px-4 py-6">
-        <!-- {% include "_add_task_form.html" %}
-        {% include "edit_task.html" %} -->
         <h2 class="text-xl font-semibold text-gray-900 mb-4">
             {% if page == "today" %}
                 Today's Tasks
@@ -111,10 +109,6 @@
         {% include "_sort_bar.html" %}
         {% block content %} {%endblock%}
     </main>
-
-    <form id="deleteTaskForm" method="POST" style="display:none;">
-        {% csrf_token %}
-    </form>
 
     <footer class="text-center text-sm mt-auto mb-2.5">&copy;2025 MADE WITH &#10084; BY THERESA & COVENANT
     <br>Uicons by <a href="https://www.flaticon.com/uicons">Flaticon</a>

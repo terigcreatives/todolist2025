@@ -1,11 +1,12 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="{% static 'css/todo.css' %}">
   <title>{% block title %}To-Do App{% endblock %}</title>
-  {% load static %}
-  <link rel="stylesheet" href="{% static 'css/todo.css' %}" />
+
   <style>
     .msg { padding:.5rem; margin: .5rem 0; border-radius: 4px; }
     .msg-success { background: #e6ffed; color:#065; }
@@ -14,9 +15,9 @@
   {% block head %}{% endblock %}
 </head>
 <body>
-  <header>
-    <h1>{% block header %}NEXTDEV To-Do{% endblock %}</h1>
-    <nav>
+  <header class="welcome-header">
+    <h1 class="logo">{% block header %}NEXTDEV To-Do{% endblock %}</h1>
+    <nav class="welcome-nav">
         <a href="{% url 'welcome' %}">Home</a> |
         <a href="{% url 'task_list' %}">Tasks</a> |
         {% if request.user.is_authenticated %}
@@ -43,15 +44,20 @@
     {% endfor %}
   {% endif %}
 
-  <main>
+  <main class="account-form">
     {% block content %}{% endblock %}
   </main>
 
   <footer>
-    {% block footer %}&copy; {{ now|date:'Y' }}{% endblock %}
+    {% block footer %}&copy; <span id="year"></span> MADE WITH &#10084; BY THERESA & COVENANT{% endblock %}
   </footer>
 
-  <script src="{% static 'js/todo.js' %}"></script>
+  <script src="{% static 'js/todo.js' %}">
+    // Get the current year
+    const currentYear = new Date().getFullYear();
+    // Insert it into the <span id="year">
+      document.getElementById("year").textContent = currentYear;
+  </script>
   {% block scripts %}{% endblock %}
 </body>
 </html>

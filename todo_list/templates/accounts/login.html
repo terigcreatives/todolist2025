@@ -1,18 +1,22 @@
 {% extends "base.html" %}
+
 {% block content %}
-<h2>Log in</h2>
-<form method="post" action="{% url 'login' %}">
+<h2 style="color: #2563eb; text-align: center;">Log in</h2>
+<form method="post" action="{% url 'login' %}" style="max-width:400px; margin:20px auto;">
   {% csrf_token %}
   {{ form.non_field_errors }}
   <p>
-    <label for="id_username">Username</label><br>
-    <input type="text" name="username" id="id_username" required>
+    <label for="id_username" style="display:block; font-weight:600;">Username</label><br>
+    <input type="text" name="username" id="id_username" style="width:100%; padding:10px; margin-bottom:12px; border:1px solid #ccc; border-radius:6px;" required>
   </p>
   <p>
-    <label for="id_password">Password</label><br>
-    <input type="password" name="password" id="id_password" required>
+    <label for="id_password" style="display:block; font-weight:600;">Password</label><br>
+    <input type="password" name="password" id="id_password" style="width:100%; padding:10px; margin-bottom:12px; border:1px solid #ccc; border-radius:6px;" required>
   </p>
-  <input type="hidden" name="next" value="{% url 'task_list' %}">
-  <button type="submit">Log in</button>
+  <p>
+    <input type="hidden" name="next" value="{% url 'task_list' %}">
+    <button type="submit" style="background-color:#2563eb; color:#fff; padding:10px; border: none; border-radius:8px; width:100%;">Log in</button>
+  </p>
+  
 </form>
 {% endblock %}

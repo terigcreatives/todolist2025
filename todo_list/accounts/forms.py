@@ -38,3 +38,23 @@ class SignUpForm(UserCreationForm):
             raise forms.ValidationError("An account with this email already exists.")
         return email
 
+    # inline styles added directly to the form fields
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['username'].widget.attrs.update({
+            'style': 'width:100%; padding:10px; border:1px solid #ccc; border-radius:8px; margin-bottom:10px;',
+            'placeholder': 'Enter username'
+        })
+        self.fields['email'].widget.attrs.update({
+            'style': 'width:100%; padding:10px; border:1px solid #ccc; border-radius:8px; margin-bottom:10px;',
+            'placeholder': 'Enter email address'
+        })
+        self.fields['password1'].widget.attrs.update({
+            'style': 'width:100%; padding:10px; border:1px solid #ccc; border-radius:8px; margin-bottom:10px;',
+            'placeholder': 'Enter password'
+        })
+        self.fields['password2'].widget.attrs.update({
+            'style': 'width:100%; padding:10px; border:1px solid #ccc; border-radius:8px; margin-bottom:10px;',
+            'placeholder': 'Confirm password'
+        })
