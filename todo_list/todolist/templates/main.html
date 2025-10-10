@@ -91,6 +91,7 @@
 
     <!-- Content -->
     <main class="max-w-4xl mx-auto px-4 py-6">
+        <div>
         <h2 class="text-xl font-semibold text-gray-900 mb-4">
             {% if page == "today" %}
                 Today's Tasks
@@ -107,7 +108,10 @@
             {% endif %}
         </h2>
         {% include "_sort_bar.html" %}
+        </div>
+        <div>
         {% block content %} {%endblock%}
+        </div>
     </main>
 
     <footer class="text-center text-sm mt-auto mb-2.5">&copy;2025 MADE WITH &#10084; BY THERESA & COVENANT

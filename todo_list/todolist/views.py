@@ -181,9 +181,9 @@ def edit_task(request, id):
                     task.subtasks.create(user=request.user, title=title, completed=completed)
 
         # Redirect to the page the user was on
-        next_url = request.POST.get('next')
-        if next_url and 'completed' not in next_url:
-            return redirect(next_url)
+        # next_url = request.POST.get('next')
+        # if next_url and 'completed' not in next_url:
+        #     return redirect(next_url)
         return redirect("task_list")
         # For GET, you can render a page or just return nothing if using modal
 

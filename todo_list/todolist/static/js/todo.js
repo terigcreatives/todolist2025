@@ -32,21 +32,26 @@ function addSubtaskField() {
     div.className = 'flex items-center space-x-2';
     div.innerHTML = `
         <input type="text" name="subtask_title[]" 
-                placeholder="Subtask title" 
+                placeholder="Add Subtask here" 
                 class="w-2/3 border rounded px-2 py-1 mr-2">
 
         <!-- hidden + checkbox pair -->
         <label class="mr-2"> 
-            <input type="hidden" name="subtask_title[]" value="0">
             <input type="checkbox" name="subtask_completed[]" 
                 value="1" class="accent-green-500"> Done
         </label>
 
         <!-- Delete icon -->
-        <button type="button" onclick="handleDeleteClick(btn)>
-        <i class="fi fi-rr-trash"></i></button>
-
+        <button type="button" class="delete-subtask hover:text-red-600">
+        <i class="fi fi-rr-trash"></i>
+        </button>
     `;
+
+    // Find that button and attach delete function
+    div.querySelector(".delete-subtask").addEventListener("click", function(){
+        div.remove();
+    });
+
     subtasksList.appendChild(div);
 }
 
